@@ -1,0 +1,336 @@
+/* src/components/FlashForm.css */
+
+/* === Form Container === */
+.flash-form-container {
+  /* Make the container take the full width available from its parent (main -> content-container) */
+  width: 75%;
+  /* REMOVED: max-width: 800px; */ /* Removed width limitation */
+  /* Adjust margin: remove auto horizontal centering, keep vertical spacing */
+  /*margin: 0; /* Vertical margin only */
+  /* Include padding/border in width calculation */
+  box-sizing: border-box;
+}
+
+/* === Main Form Styling === */
+.flash-form {
+  /* Background color for the form area - Changed to fit dark theme */
+  background-color: #2c2f33; /* Slightly lighter dark shade */
+  /* Text color within the form - Changed to light for dark background */
+  color: #e2e8f0; /* Light gray / Off-white */
+  /* Padding inside the form */
+  padding: 20px;
+  /* Rounded corners */
+  border-radius: 12px;
+  /* Shadow effect for depth - Adjusted for dark theme */
+  box-shadow: 0 8px 20px rgba(27, 11, 11, 0.4);
+  /* Use flexbox to arrange elements vertically */
+  display: flex;
+  flex-direction: column;
+  /* Space between direct children elements */
+  gap: 10px; /* Increased gap slightly */
+}
+
+/* === Form Title === */
+.flash-form h2 {
+  /* Center the title text */
+  text-align: center;
+  /* Title color - Adjusted for dark theme */
+  color: #ffffff; /* White or slightly off-white */
+  /* Space below the title */
+  margin-bottom: 5px;
+  /* Font size for the title */
+  font-size: 2em;
+  /* Remove default margin from h2 */
+  margin-top: 0;
+}
+
+/* === Form Description Text === */
+.form-description {
+  /* Center the description text */
+  text-align: center;
+  /* Description color - Adjusted for dark theme */
+  color: #b0bec5; /* Lighter gray for secondary text */
+  /* Font size for the description */
+  font-size: 1em;
+  /* Space below the description */
+  margin-bottom: 20px;
+  /* Line height for readability */
+  line-height: 1.6;
+}
+
+/* === Controls Container (Clear, Upload, Num Questions) === */
+.form-controls {
+  /* Use flexbox for layout */
+  display: flex;
+  /* Allow items to wrap onto the next line on smaller screens */
+  flex-wrap: wrap;
+  /* Gap between control items */
+  gap: 15px;
+  /* Vertically align items in the center */
+  align-items: center;
+  /* Distribute space between items */
+  justify-content: space-between;
+  /* Space below the controls container */
+  margin-bottom: 15px;
+}
+
+/* === General Button Styles (in controls) === */
+.control-button {
+  /* Padding inside buttons */
+  padding: 10px 18px;
+  /* Remove default browser border */
+  border: none;
+  /* Rounded corners */
+  border-radius: 6px;
+  /* Indicate interactivity */
+  cursor: pointer;
+  /* Font size */
+  font-size: 0.95em;
+  /* Font weight */
+  font-weight: 500;
+  /* Smooth transition for hover effects */
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  /* Base text color for buttons - ensure contrast */
+  color: #ffffff;
+}
+
+/* Hover effect for control buttons */
+.control-button:hover {
+  /* Subtle lift effect */
+  transform: translateY(-1px);
+  /* Add a subtle glow or shadow on hover */
+  box-shadow: 0 2px 8px rgba(97, 218, 251, 0.3); /* Using accent color */
+}
+
+/* === Specific Button Styles === */
+.clear-button {
+  /* Background color - Dark theme */
+  background-color: #4f545c; /* Medium dark gray */
+  /* Text color */
+  color: #e0e0e0; /* Light gray */
+  /* Optional: Subtle border */
+  /* border: 1px solid #60666e; */
+}
+.clear-button:hover {
+  /* Darken slightly on hover */
+  background-color: #42464d;
+}
+
+.upload-button {
+  /* Background color using accent - Dark theme */
+  background-color: #3a7ca5; /* Muted blue */
+  /* Text color */
+  color: #ffffff;
+  /* Optional: Subtle border */
+  /* border: 1px solid #4a8cb5; */
+}
+.upload-button:hover {
+  /* Slightly brighter/darker blue on hover */
+  background-color: #326a8f;
+}
+
+/* === Number of Questions Input Area === */
+.num-questions-control {
+  /* Use flexbox for label and input */
+  display: flex;
+  /* Vertically align items */
+  align-items: center;
+  /* Space between label and input */
+  gap: 8px;
+  /* Allow this control to grow if space is available in flex container */
+  flex-grow: 1;
+  /* Align the content (label+input) to the right within its space */
+  justify-content: flex-end;
+  /* Ensure it doesn't shrink below content size */
+  flex-shrink: 0;
+}
+
+/* Label for the number input */
+.num-questions-control label {
+  /* Font size */
+  font-size: 0.9em;
+  /* Text color - Adjusted for dark theme */
+  color: #b0bec5; /* Light gray */
+  /* Font weight */
+  font-weight: 500;
+}
+
+/* The number input field */
+.num-questions-input {
+  /* Padding inside the input */
+  padding: 9px 12px;
+  /* Border color - Adjusted for dark theme */
+  border: 1px solid #4f545c; /* Medium dark gray */
+  /* Background color - Adjusted for dark theme */
+  background-color: #36393f; /* Darker input background */
+  /* Text color - Adjusted for dark theme */
+  color: #e0e0e0; /* Light text */
+  /* Rounded corners */
+  border-radius: 6px;
+  /* Fixed width for the input */
+  width: 70px;
+  /* Font size */
+  font-size: 0.95em;
+  /* Center align the text (number) */
+  text-align: center;
+  /* Subtle inset shadow */
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+  /* Remove default number input spinners (optional) */
+  appearance: textfield;
+}
+.num-questions-input::-webkit-outer-spin-button,
+.num-questions-input::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Safari/Chrome */
+  margin: 0;
+}
+
+/* Focus style for the number input */
+.num-questions-input:focus {
+  /* Remove default outline */
+  outline: none;
+  /* Change border color on focus - Using accent */
+  border-color: #61dafb;
+  /* Add a focus ring effect */
+  box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.3); /* Using accent color */
+}
+
+/* === Text Input Area (Textarea) === */
+.text-input-area {
+  /* Take full width of its container */
+  width: 100%;
+  /* Padding inside the textarea */
+  padding: 15px;
+  /* Border color - Adjusted for dark theme */
+  border: 1px solid #4f545c;
+  /* Background color - Adjusted for dark theme */
+  background-color: #36393f; /* Darker input background */
+  /* Text color - Adjusted for dark theme */
+  color: #e0e0e0; /* Light text */
+  /* Rounded corners */
+  border-radius: 8px;
+  /* Font size */
+  font-size: 1em;
+  /* Line height for readability */
+  line-height: 1.6;
+  /* Include padding/border in width/height */
+  box-sizing: border-box;
+  /* Minimum height */
+  min-height: 250px; /* Increased min-height slightly */
+  /* Subtle inset shadow */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+  /* Transition for focus effect */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  /* Disable manual resizing handle */
+  resize: none;
+  /* Inherit font from parent */
+  font-family: inherit;
+}
+
+/* Focus style for the textarea */
+.text-input-area:focus {
+  /* Remove default outline */
+  outline: none;
+  /* Change border color on focus - Using accent */
+  border-color: #61dafb;
+  /* Add focus ring effect and keep inset shadow */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 0 3px rgba(97, 218, 251, 0.3); /* Using accent color */
+}
+
+/* === Main Generate Button === */
+.main-action-button {
+  /* Background color - Using accent color */
+  background-color: #61dafb; /* React blue accent */
+  /* Text color - Choose for contrast */
+  color: #1e2124; /* Dark text for light blue button */
+  /* Padding inside the button */
+  padding: 14px 25px;
+  /* Font size */
+  font-size: 1.1em;
+  /* Font weight */
+  font-weight: 600;
+  /* Remove default border */
+  border: none;
+  /* Rounded corners */
+  border-radius: 8px;
+  /* Indicate interactivity */
+  cursor: pointer;
+  /* Make the button take full width */
+  width: 100%;
+  /* Include padding/border in width */
+  box-sizing: border-box;
+  /* Smooth transition for hover effects */
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  /* Shadow effect for the button */
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.2);
+}
+
+/* Hover effect for the main action button */
+.main-action-button:hover {
+  /* Slightly change background on hover */
+  background-color: #4abcec; /* Slightly darker/different shade of accent */
+  /* Subtle lift effect */
+  transform: translateY(-1px);
+  /* Increase shadow intensity on hover */
+  box-shadow: 0 6px 15px rgba(97, 218, 251, 0.3);
+}
+
+/* WORD COUNT FEATURE CSS */
+.textarea-wrapper {
+  position: relative; /* Needed for absolute positioning of word count */
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.text-input-area {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  line-height: 1.5;
+  box-sizing: border-box; /* Important for width 100% to include padding */
+  resize: none; /* Allow only vertical resizing */
+  /* Add padding-bottom to make space for the word count if it's inside */
+  padding-bottom: 30px; /* Adjust if your font size or word count height is different */
+}
+
+.word-count {
+  position: absolute;
+  bottom: 10px;  /* Adjust to be above border and padding */
+  right: 15px;   /* Adjust to be inside padding */
+  font-size: 0.8em;
+  color: #777;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 600px) {
+  /* Style changes for screens 600px wide or less */
+
+  .form-controls {
+    /* Stack controls vertically */
+    flex-direction: column;
+    /* Make items stretch to fill container width */
+    align-items: stretch;
+  }
+
+  .num-questions-control {
+    /* Distribute space between label and input */
+    justify-content: space-between;
+    /* Ensure it takes full width in the column layout */
+    width: 100%;
+  }
+
+  .control-button {
+    /* Make control buttons take full width */
+    width: 100%;
+    /* Ensure text is centered if needed */
+    text-align: center;
+  }
+
+  .flash-form {
+    /* Reduce padding on smaller screens */
+    padding: 20px;
+  }
+}

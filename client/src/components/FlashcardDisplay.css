@@ -1,0 +1,617 @@
+/* src/components/FlashcardDisplay.css */
+
+/* 
+  NOTE: Global body styles are removed from here as they should be handled 
+  by the main App.css or index.css.
+*/
+
+/* === Main Display Container === */
+.flashcard-display-container {
+  /* Use flexbox for overall layout */
+  display: flex;
+  /* Arrange content vertically */
+  flex-direction: column;
+  /* Align items to stretch horizontally by default */
+  align-items: stretch; /* Changed from center */
+  /* Justify content from the start (top) */
+  justify-content: flex-start;
+  /* Ensure container takes at least full viewport height */
+  /* min-height: 100vh; */ /* This might be redundant if App sets min-height */
+  /* Padding inside the main container */
+  padding: 0; /* Padding is handled by 'main' in App.css or within content */
+  /* Background is inherited from App/body */
+  /* background: linear-gradient(to bottom right, #0f172a, #334155); */ /* Removed, use App's background */
+  /* Default text color */
+  color: #e2e8f0;
+  /* Ensure font matches the rest of the app */
+  font-family: inherit; /* Inherit from body/App */
+  /* Include padding/border in width/height calculations */
+  box-sizing: border-box;
+  /* Take full width available from parent */
+  width: 85%;
+}
+
+/* === Content Wrapper within Display === */
+.flashcard-display-content {
+  /* Take full width available */
+  width: 100%;
+  /* REMOVED: max-width: 896px; */ /* Removed width limitation */
+  /* Space below the content area */
+  margin-bottom: 32px;
+  /* REMOVED: margin-left/right: auto; */ /* Removed centering */
+  /* Apply padding here if needed, instead of the main container */
+  padding: 0 24px; /* Horizontal padding */
+  box-sizing: border-box;
+}
+
+/* === Back to Create Form Button === */
+.back-to-form-button {
+  /* Space below the button */
+  margin-bottom: 24px;
+  /* Align button to the start (left) */
+  align-self: flex-start;
+  /* Padding inside the button */
+  padding: 8px 16px;
+  /* Background color - Using accent color */
+  background-color: #61dafb; /* React blue accent */
+  /* Text color for contrast */
+  color: #1e2124; /* Dark text */
+  /* Remove default border */
+  border: none;
+  /* Rounded corners */
+  border-radius: 8px;
+  /* Indicate interactivity */
+  cursor: pointer;
+  /* Smooth transition for hover effect */
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.1s ease;
+  /* Shadow effect */
+  box-shadow: 0 2px 5px rgba(97, 218, 251, 0.2);
+  /* Font size */
+  font-size: 0.9rem;
+  /* Font weight */
+  font-weight: 500;
+}
+
+/* Hover effect for the back button */
+.back-to-form-button:hover {
+  /* Slightly darker/different accent color */
+  background-color: #4abcec;
+  /* Enhance shadow */
+  box-shadow: 0 4px 8px rgba(97, 218, 251, 0.3);
+  /* Subtle lift */
+  transform: translateY(-1px);
+}
+
+/* === Main Card Section Wrapper === */
+.card-section {
+  /* Background color - Matches FlashForm background */
+  background-color: #2c2f33; /* Slightly lighter dark shade */
+  /* Rounded corners */
+  border-radius: 12px;
+  /* Shadow effect - Adjusted for dark theme */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  /* Padding inside the section */
+  padding: 32px;
+  /* Ensure full width within its container */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Title within the card section */
+.card-section-title {
+  /* Font size */
+  font-size: 2rem; /* Slightly smaller than form title */
+  /* Font weight */
+  font-weight: bold;
+  /* Text alignment */
+  text-align: center;
+  /* Space below title */
+  margin-bottom: 12px;
+  /* Title color - Using accent */
+  color: #61dafb; /* React blue accent */
+  /* Remove default margin */
+  margin-top: 0;
+  
+}
+
+/* Subtitle/description within the card section */
+.card-section-subtitle {
+  /* Text alignment */
+  text-align: center;
+  /* Text color - Lighter gray for secondary text */
+  color: #b0bec5;
+  /* Space below subtitle */
+  margin-bottom: 24px;
+  /* Font size */
+  font-size: 1rem;
+}
+
+/* === Progress Bar Area === */
+.progress-info-container {
+  /* Space below the progress bar */
+  margin-bottom: 24px;
+}
+
+/* Text above the progress bar (count, percentage) */
+.progress-text {
+  /* Use flexbox to space out text elements */
+  display: flex;
+  justify-content: space-between;
+  /* Font size */
+  font-size: 0.875rem;
+  /* Text color */
+  color: #cbd5e1; /* Light gray */
+  /* Space below the text */
+  margin-bottom: 8px; /* Increased spacing slightly */
+}
+
+/* Background track of the progress bar */
+.progress-bar-background {
+  /* Take full width */
+  width: 100%;
+  /* Background color */
+  background-color: #4f545c; /* Medium dark gray */
+  /* Make it fully rounded */
+  border-radius: 9999px;
+  /* Height of the progress bar */
+  height: 10px;
+  /* Hide overflow to maintain rounded corners */
+  overflow: hidden;
+  /* Add a subtle inset shadow for depth */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* Foreground (filled part) of the progress bar */
+.progress-bar-foreground {
+  /* Background color - Using a less saturated green */
+  background-color: #4caf50; /* Material Design Green */
+  /* Make it fully rounded */
+  border-radius: 9999px;
+  /* Match parent height */
+  height: 100%;
+  /* Smooth transition for width changes */
+  transition: width 0.5s ease-out;
+}
+
+/* === Flashcard Container and Flip Styling === */
+.flashcard-container {
+  /* Enable 3D positioning for children */
+  position: relative;
+  /* Take full width */
+  width: 100%;
+  /* Fixed height for the card area */
+  height: 350px; /* Adjusted height slightly */
+  /* Space below the card */
+  margin-bottom: 15px; /* Increased spacing */
+  /* Indicate interactivity */
+  cursor: pointer;
+  /* Set perspective for the 3D flip effect - CRUCIAL for 3D feel */
+  perspective: 1800px; /* Increased for more pronounced 3D effect */
+}
+
+/* Common styles for both front and back faces of the card */
+.flashcard-flipper {
+  /* Position absolutely within the container */
+  position: absolute;
+  /* Take full width and height of container */
+  width: 100%;
+  height: 100%;
+  /* Rounded corners */
+  border-radius: 8px;
+  /* Shadow effect */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  /* UNIQUE ANIMATION: Adjusted transition for a custom feel */
+  /* A custom cubic-bezier can make it feel very different.
+     This one: fast start, slow middle, moderate end.
+     Experiment with values here: https://cubic-bezier.com/ */
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.7s ease-in-out;
+  /* Preserve 3D transformations */
+  transform-style: preserve-3d;
+  /* Use flexbox to center content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Padding inside the card */
+  padding: 25px;
+  /* Center text content */
+  text-align: center;
+  /* Hide the back face when not visible */
+  backface-visibility: hidden;
+  box-sizing: border-box; /* Include padding in dimensions */
+}
+
+/* Front face of the card */
+.flashcard-front {
+  background: linear-gradient(135deg, #36393f 0%, #4f545c 100%);
+  /* Initial state, slightly forward to prevent z-fighting */
+  transform: rotateY(0deg) translateZ(1px);
+  opacity: 1;
+}
+
+/* Apply rotation and other transforms when 'flipped' class is present */
+.flashcard-front.flipped {
+  /* UNIQUE ANIMATION: Front face swoops away */
+  /* It rotates past 180, skews, moves on X and Z, and scales down slightly */
+  transform: rotateY(200deg) skewX(-15deg) translateX(30%) translateZ(-100px) scale(0.9);
+  opacity: 0; /* Fade out the front as it turns */
+}
+
+/* Back face of the card */
+.flashcard-back {
+  /* === GREEN GRADIENT FOR ANSWER SIDE === */
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%); /* Vibrant Green to Teal */
+  /* color: #ffffff; /* Text color set by .flashcard-text-answer */
+
+  /* UNIQUE ANIMATION: Back face is initially transformed "behind" and ready to swoop in */
+  /* Starts rotated from the "other side", skewed, and offset */
+  transform: rotateY(-200deg) skewX(15deg) translateX(-30%) translateZ(-100px) scale(0.9);
+  opacity: 0; /* Start transparent */
+}
+
+/* Apply rotation back to 0 and reset transforms when 'flipped' class is present */
+.flashcard-back.flipped {
+  /* UNIQUE ANIMATION: Back face swoops in and settles */
+  transform: rotateY(0deg) skewX(0deg) translateX(0%) translateZ(1px) scale(1);
+  opacity: 1; /* Fade in */
+}
+
+/* Text style for the question on the front */
+.flashcard-text-question {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #f1f5f9; /* Off-white */
+}
+
+/* Text style for the answer on the back */
+.flashcard-text-answer {
+  font-size: 1.2rem;
+  color: #ffffff; /* Ensure white text for good contrast on the green gradient */
+}
+
+/* === Navigation Controls (Prev/Next/Counter) === */
+.controls-navigation {
+  /* Use flexbox */
+  display: flex;
+  /* Default direction for mobile */
+  flex-direction: column;
+  /* Center items horizontally in column mode */
+  align-items: center;
+  /* Gap between items */
+  gap: 12px;
+  /* Space below this section */
+  margin-bottom: 24px;
+}
+
+/* Styling for Previous/Next buttons */
+.controls-navigation-button {
+  /* Full width on mobile */
+  width: 100%;
+  /* Padding */
+  padding: 10px 20px;
+  /* Rounded corners */
+  border-radius: 8px;
+  /* Font size */
+  font-size: 0.9rem;
+  /* Font weight */
+  font-weight: 500;
+  /* Transition effects */
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.1s ease;
+  /* Background color - Using accent */
+  background-color: #61dafb;
+  /* Text color - Dark for contrast */
+  color: #1e2124;
+  /* Remove default border */
+  border: none;
+  /* Indicate interactivity */
+  cursor: pointer;
+  /* Subtle shadow */
+  box-shadow: 0 1px 3px rgba(97, 218, 251, 0.2);
+}
+/* Hover state for navigation buttons (when not disabled) */
+.controls-navigation-button:hover:not(:disabled) {
+  /* Darker/different accent color */
+  background-color: #4abcec;
+  /* Enhance shadow */
+  box-shadow: 0 3px 6px rgba(97, 218, 251, 0.3);
+  /* Lift effect */
+  transform: translateY(-1px);
+}
+/* Disabled state for navigation buttons */
+.controls-navigation-button:disabled {
+  /* Muted background */
+  background-color: #4f545c; /* Medium dark gray */
+  /* Muted text color */
+  color: #8a8d91; /* Darker gray */
+  /* Indicate non-interactive state */
+  cursor: not-allowed;
+  /* Reset shadow and transform */
+  box-shadow: none;
+  transform: none;
+}
+
+/* Card counter display (e.g., "3 / 10") */
+.card-counter {
+  /* Padding */
+  padding: 10px 16px;
+  /* Background color */
+  background-color: #4f545c; /* Medium dark gray */
+  /* Rounded corners */
+  border-radius: 8px;
+  /* Text color */
+  color: #cbd5e1; /* Light gray */
+  /* Font size */
+  font-size: 0.9rem;
+  /* Center text */
+  text-align: center;
+  /* Ensure it doesn't shrink */
+  flex-shrink: 0;
+}
+
+/* === Action Controls (Random, Toggle, Reset) === */
+.controls-actions {
+  /* Use grid layout */
+  display: grid;
+  /* Default to single column for mobile */
+  grid-template-columns: 1fr;
+  /* Gap between grid items */
+  gap: 12px;
+}
+
+/* Common styles for action buttons */
+.action-button {
+  /* Padding */
+  padding: 10px 16px;
+  /* Rounded corners */
+  border-radius: 8px;
+  /* Default text color */
+  color: white;
+  /* Remove default border */
+  border: none;
+  /* Indicate interactivity */
+  cursor: pointer;
+  /* Transition effects */
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease, box-shadow 0.2s ease;
+  /* Subtle shadow */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  /* Font size */
+  font-size: 0.9rem;
+  /* Font weight */
+  font-weight: 500;
+}
+/* Hover effect for action buttons */
+.action-button:hover {
+  /* Lift effect */
+  transform: translateY(-1px);
+  /* Slightly enhance shadow */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Specific colors for action buttons */
+.random-button {
+  background-color: #8a3ffc; /* Violet/Purple */
+}
+.random-button:hover {
+  background-color: #7e22ce;
+}
+
+.toggle-progress-button {
+  background-color: #6f7680; /* Gray */
+}
+.toggle-progress-button:hover {
+  background-color: #5e646b;
+}
+
+.reset-progress-button {
+  background-color: #e53e3e; /* Red */
+}
+.reset-progress-button:hover {
+  background-color: #c53030;
+}
+
+
+/* === Study Tips Section === */
+.study-tips-section {
+  /* Space above this section */
+  margin-top: 40px;
+  /* Background color - same as card section */
+  background-color: #2c2f33;
+  /* Rounded corners */
+  border-radius: 12px;
+  /* Shadow effect */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  /* Padding */
+  padding: 32px;
+}
+
+/* Title for the study tips section */
+.study-tips-title {
+  /* Font size */
+  font-size: 1.5rem;
+  /* Font weight */
+  font-weight: bold;
+  /* Space below title */
+  margin-bottom: 16px; /* Increased spacing */
+  /* Title color - using accent */
+  color: #61dafb;
+  /* Remove default margin */
+  margin-top: 0;
+}
+
+/* List styling for study tips */
+.study-tips-list {
+  /* Use disc bullets */
+  list-style-type: disc;
+  /* Indent the list */
+  padding-left: 25px;
+  /* Text color */
+  color: #b0bec5; /* Lighter gray */
+  margin: 0; /* Remove default ul margin */
+}
+/* Spacing between list items */
+.study-tips-list li {
+  margin-bottom: 10px;
+}
+
+
+/* === Loading State Styling === */
+.loading-container {
+  /* Use flexbox */
+  display: flex;
+  /* Arrange vertically */
+  flex-direction: column;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+  justify-content: center;
+  /* Take full available height */
+  flex-grow: 1; /* Allow it to fill space in main */
+  /* Padding */
+  padding: 24px;
+  /* Background should match App's background */
+  /* background-color: #f3f4f6; */ /* Removed, inherit from App */
+  color: #ffffff; /* Ensure text is visible */
+}
+.loading-text {
+  /* Font size */
+  font-size: 1.25rem;
+  /* Space below text */
+  margin-bottom: 20px;
+  /* Text color */
+  color: #e0e0e0; /* Light gray */
+}
+.loading-button {
+  /* Space above button */
+  margin-top: 24px;
+  /* Padding */
+  padding: 12px 24px;
+  /* Background color - use accent */
+  background-color: #61dafb;
+  /* Text color for contrast */
+  color: #1e2124;
+  /* Remove border */
+  border: none;
+  /* Rounded corners */
+  border-radius: 8px;
+  /* Indicate interactivity */
+  cursor: pointer;
+  /* Transition effects */
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.1s ease;
+  /* Font size */
+  font-size: 1.125rem;
+  /* Font weight */
+  font-weight: 500;
+  /* Shadow */
+  box-shadow: 0 2px 5px rgba(97, 218, 251, 0.2);
+}
+.loading-button:hover {
+  /* Darker/different accent */
+  background-color: #4abcec;
+  /* Enhance shadow */
+  box-shadow: 0 4px 8px rgba(97, 218, 251, 0.3);
+  /* Lift effect */
+  transform: translateY(-1px);
+}
+
+
+/* === Responsive Adjustments === */
+/* Apply styles for screens 640px wide or larger */
+@media (min-width: 640px) {
+  /* Switch navigation controls to row layout */
+  .controls-navigation {
+    flex-direction: row;
+    /* Center items horizontally */
+    justify-content: center;
+    /* Gap between items in the row */
+    gap: 16px;
+  }
+  /* Allow navigation buttons to size automatically */
+  .controls-navigation-button {
+    width: auto;
+  }
+  /* Arrange action buttons in 3 columns */
+  .controls-actions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  /* Optional: Adjust card height or font sizes for larger screens if needed */
+  .flashcard-front.flipped {
+    transform: rotateY(200deg) skewX(-15deg) translateX(25%) translateZ(-120px) scale(0.9);
+  }
+  .flashcard-back {
+    transform: rotateY(-200deg) skewX(15deg) translateX(-25%) translateZ(-120px) scale(0.9);
+  }
+}
+
+/* Optional: Further adjustments for very large screens */
+@media (min-width: 1024px) {
+  .flashcard-display-content {
+    /* Add horizontal padding back for very wide screens to prevent content stretching too much */
+    padding: 0 64px;
+  }
+   .flashcard-container {
+     /* Maybe limit max-width of card itself on huge screens */
+     max-width: 950px;
+     margin-left: auto;
+      margin-right: auto;
+   }
+}
+
+/* === Save Deck Section === */
+.save-deck-section {
+  margin-top: 10px; /* Space above the save button */
+  margin-bottom: 20px; /* Space below the save section */
+  text-align: center; /* Center the button and messages */
+}
+
+.save-deck-button {
+  padding: 10px 20px;
+  background-color: #28a745; /* Green for save action */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.save-deck-button:hover:not(:disabled) {
+  background-color: #218838; /* Darker green */
+  transform: translateY(-1px);
+}
+
+.save-deck-button:disabled {
+  background-color: #5a6268; /* Grey when disabled */
+  cursor: not-allowed;
+}
+
+.save-message {
+  margin-top: 10px;
+  font-size: 0.9em;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.save-message.success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.save-message.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.save-message.info {
+  color: #1e2124;  
+  width: 30%;
+  align-items: center;
+  margin: 10px auto 20px; 
+  background-color: #61dafb;
+  border: 1px solid #97ebf8;
+  margin-top: 10px; /* Ensure spacing if it's the only message */
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 400;
+}

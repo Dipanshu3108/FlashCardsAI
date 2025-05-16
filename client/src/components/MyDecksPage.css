@@ -1,0 +1,135 @@
+/* src/components/MyDecksPage.css */
+.my-decks-container {
+  max-width: 900px; /* Increased max-width slightly */
+  margin: 30px auto; /* Centering and top/bottom margin */
+  padding: 25px 30px; /* Padding inside the container */
+  background-color: #2c2f33; /* Dark background, consistent with other sections */
+  border-radius: 12px; /* Rounded corners */
+  color: #e2e8f0; /* Light text color for readability */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Softer shadow */
+}
+
+.my-decks-container.loading,
+.my-decks-container .error-message,
+.my-decks-container .no-decks-message {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 1.1em;
+  color: #cbd5e1;
+}
+
+.my-decks-container .error-message {
+  color: #e53e3e; /* Red for errors */
+  background-color: rgba(229, 62, 62, 0.1);
+  border: 1px solid #e53e3e;
+  border-radius: 6px;
+}
+
+.my-decks-container h2 {
+  text-align: center;
+  color: #61dafb; /* Accent color for title */
+  margin-bottom: 30px; /* More space below title */
+  font-size: 2rem;
+}
+
+.decks-list {
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Remove default ul margin */
+}
+
+.deck-item {
+  background-color: #36393f; /* Slightly lighter than main container */
+  border: 1px solid #4f545c; /* Subtle border */
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px; /* Space between deck items */
+  display: flex;
+  flex-direction: column; /* Stack info and actions on small screens */
+  gap: 15px; /* Gap between info and actions */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.deck-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+.deck-info h3 {
+  margin: 0 0 8px 0;
+  color: #00FFCB; /* Your theme's accent color */
+  font-size: 1.4em;
+}
+
+.deck-info p {
+  margin: 0 0 5px 0;
+  font-size: 0.95em;
+  color: #b0bec5; /* Lighter grey for details */
+}
+
+.deck-info .deck-date {
+  font-size: 0.8em;
+  color: #8a8d91; /* Even lighter for less prominent info */
+  font-style: italic;
+}
+
+.deck-actions {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  align-items: center; /* Align buttons nicely if they wrap */
+  flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+}
+
+.deck-actions button {
+  padding: 10px 18px; /* Slightly larger padding */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500; /* Bolder text */
+  font-size: 0.95em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.deck-actions button:hover {
+    transform: translateY(-2px);
+}
+
+.deck-actions .view-button {
+  background-color: #007bff; /* Standard blue */
+  color: white;
+  flex-grow: 1; /* Allow view button to take more space if needed */
+}
+.deck-actions .view-button:hover {
+  background-color: #0056b3;
+}
+
+.deck-actions .delete-button {
+  background-color: #dc3545; /* Standard red */
+  color: white;
+}
+.deck-actions .delete-button:hover {
+  background-color: #c82333;
+}
+
+.limit-notice {
+  text-align: center;
+  margin-top: 30px;
+  padding: 10px;
+  background-color: rgba(255, 193, 7, 0.1); /* Light yellow background for warning */
+  border: 1px solid #ffc107; /* Yellow border */
+  color: #ffc107; /* Warning color text */
+  border-radius: 6px;
+  font-style: italic;
+}
+
+/* Responsive adjustments for deck items */
+@media (min-width: 600px) {
+  .deck-item {
+    flex-direction: row; /* Align info and actions side-by-side */
+    justify-content: space-between;
+    align-items: center;
+  }
+  .deck-actions {
+    flex-shrink: 0; /* Prevent actions from shrinking too much */
+  }
+}

@@ -1,0 +1,371 @@
+/* client/src/App.css */
+
+/* === Global Styles === */
+body {
+  margin: 0;
+  /* If you want to use Nunito, ensure it's imported in your project, e.g., in public/index.html */
+  /* <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet"> */
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #1e2124;
+  color: #ffffff;
+}
+
+/* === Main App Container === */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-align: center;
+}
+
+/* === Header Styles === */
+.App-header {
+  background-color: #1e2124;
+  padding: 10px 24px;
+  color: rgb(255, 255, 255);
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(97, 218, 251, 0.5);
+  position: relative;
+  z-index: 10;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+}
+
+.header-left {
+  text-align: left;
+  flex: 0 0 auto;
+}
+
+.header-left h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500; /* Or 700 if you prefer to match button more */
+}
+
+.header-right {
+  text-align: right;
+  margin-left: auto;
+}
+
+.header-right .nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.header-right .nav-links li {
+  margin-left: 20px;
+  position: relative;
+}
+
+/* === NEW Pulsating Ring Button Style === */
+.nav-action-button {
+  /* min-width: 150px; */ /* Adjust as needed, or rely on padding */
+  /* min-height: 40px; */ /* Adjust as needed, or rely on padding */
+  padding: 10px 20px; /* Controls the button size */
+  display: inline-flex; /* Important for centering content */
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif; /* From example */
+  font-size: 16px; /* Adjusted from 22px for nav */
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133; /* Dark text from example */
+  background: #4FD1C5; /* Light teal background from example */
+  background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+  border: none;
+  border-radius: 1000px; /* Pill shape */
+  box-shadow: 6px 6px 12px rgba(79,209,197,.34); /* Adjusted shadow for smaller size */
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  text-decoration: none; /* For <Link> elements */
+}
+
+.nav-action-button::before {
+  content: '';
+  border-radius: 1000px;
+  /* Make ::before slightly larger than the button based on its padding and border */
+  /* These values are relative to the button's dimensions */
+  min-width: calc(100% + 12px); /* 100% of button width + 2*border */
+  min-height: calc(100% + 12px); /* 100% of button height + 2*border */
+  border: 2.5px solid #00FFCB;
+  box-shadow: 0 0 30px rgba(0,255,203,.64); /* Adjusted shadow */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+  z-index: -1; /* Ensure it's behind the button text */
+}
+
+.nav-action-button:hover,
+.nav-action-button:focus {
+  color: #313133; /* Keep dark text on hover */
+  transform: translateY(-4px); /* Adjusted lift */
+}
+
+.nav-action-button:hover::before,
+.nav-action-button:focus::before {
+  opacity: 1;
+}
+
+
+/* RING ANIMATIONS */
+/* .nav-action-button::after {
+  content: '';
+  width: 20px;
+  height: 20px; 
+  border-radius: 100%;
+  border: 4px solid #00FFCB; 
+  position: absolute;
+  z-index: -2; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+.nav-action-button:hover::after,
+.nav-action-button:focus::after {
+  animation: none;
+  display: none;
+} */
+
+@keyframes ring {
+  0% {
+    width: 20px; /* Start size */
+    height: 20px; /* Start size */
+    opacity: 1;
+  }
+  100% {
+    width: 150px; /* End size - adjust as needed for nav items */
+    height: 150px; /* End size - adjust as needed for nav items */
+    opacity: 0;
+  }
+}
+
+/* === Account Dropdown Styles (Keep as is or adjust as needed) === */
+.account-menu .auth-dropdown {
+  position: absolute;
+  top: calc(100% + 10px); /* Increased gap for lifted button */
+  right: 0;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 100;
+  min-width: 125px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  gap: 2px;
+}
+
+.auth-dropdown a,
+.auth-dropdown button {
+  color: white;
+  text-decoration: none;
+  padding: 8px 10px;
+  display: block;
+  background: none;
+  border: none;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.auth-dropdown a:hover,
+.auth-dropdown button:hover {
+  background-color: #3c5855;
+  color: white;
+}
+
+/* === Main Content Area === */
+main {
+  flex-grow: 1;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.content-container {
+  width: 100%;
+  background-color: transparent;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Styles for auth pages (Keep as is or integrate further) */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+  width: 100%;
+}
+
+.auth-container {
+  background-color: #2c2c2c;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  color: #f0f0f0;
+}
+/* ... (rest of your auth-container, form-group, etc. styles remain) ... */
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #e0e0e0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #cccccc;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #3a3a3a;
+  color: #f0f0f0;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4FD1C5;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.error-message {
+  color: #ff4d4d;
+  background-color: rgba(255, 77, 77, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4FD1C5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #0056b3;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+.auth-switch a {
+  color: #4FD1C5;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+/* App.css or Modal.css or a new LoginOrSkipModal.css */
+
+.login-or-skip-modal-content {
+  padding: 20px;
+  text-align: center;
+  color: #e0e0e0; /* Assuming dark modal background from Modal.css */
+}
+
+.login-or-skip-modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #61dafb; /* Or your accent color */
+}
+
+.login-or-skip-modal-content p {
+  margin-bottom: 25px;
+  line-height: 1.6;
+  font-size: 0.95em;
+}
+
+.login-or-skip-actions {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  gap: 15px; /* Space between buttons */
+  align-items: center; /* Center buttons if they don't take full width */
+}
+
+.login-or-skip-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  width: 80%; /* Make buttons take up significant width */
+  max-width: 250px; /* Max width for buttons */
+}
+
+.login-or-skip-actions .auth-action-button {
+  background-color: #007bff; /* Primary action color */
+  color: white;
+}
+.login-or-skip-actions .auth-action-button:hover {
+  background-color: #0056b3;
+}
+
+.login-or-skip-actions .skip-action-button {
+  background-color: #6c757d; /* Secondary/neutral color */
+  color: white;
+}
+.login-or-skip-actions .skip-action-button:hover {
+  background-color: #5a6268;
+}
+
+/* Optional: Adjust modal content width in Modal.css if needed for this specific content */
+/* Example: if your .modal-content from Modal.css has a max-width that's too large for this text */
+/* you might target it with a specific class if the modal component allows, or adjust globally. */
