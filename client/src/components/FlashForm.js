@@ -13,6 +13,7 @@ const FlashForm = () => {
   const [text, setText] = useState('');
   const [numberOfQuestions, setNumberOfQuestions] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
+  const [uploadedPdf, setUploadedPdf] = useState(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -23,6 +24,9 @@ const FlashForm = () => {
   const currentWordCount = useMemo(() => countWords(text), [text]);
 
   const handleTextChange = (e) => {
+    // If a PDF is uploaded, don't allow text changes
+    if (uploadedPdf) return;
+    
     const newText = e.target.value;
     const words = newText.trim().split(/\s+/);
     if (words.length <= MAX_WORDS_FOR_TEXT_INPUT) {
@@ -35,6 +39,7 @@ const FlashForm = () => {
 
   const handleClear = () => {
     setText('');
+    setUploadedPdf(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = null;
     }
@@ -49,9 +54,9 @@ const FlashForm = () => {
           if (fileInputRef.current) fileInputRef.current.value = null;
           return;
         }
-        // This is your placeholder logic
-        setText(`File uploaded: ${file.name}. Text extraction placeholder for AI processing.`);
-        alert("PDF uploaded. Note: Current implementation uses placeholder text for AI generation.");
+        // Store the PDF file reference
+        setUploadedPdf(file);
+        setText(`PDF ready for processing: ${file.name}`);
       } else {
         alert('Please upload a PDF file.');
         if (fileInputRef.current) fileInputRef.current.value = null;
@@ -94,8 +99,8 @@ const FlashForm = () => {
       alert('Gemini API key is not configured.');
       return;
     }
-    if (!text.trim()) {
-      alert('Please enter some text or upload a PDF (placeholder text will be used).');
+    if (!text.trim() && !uploadedPdf) {
+      alert('Please enter some text or upload a PDF.');
       return;
     }
     if (!numberOfQuestions || numberOfQuestions <= 0) {
@@ -105,7 +110,45 @@ const FlashForm = () => {
 
     setIsLoading(true);
 
-    const prompt = `Generate ${numberOfQuestions} flashcards from the following text.
+    let requestBody;
+
+    try {
+      if (uploadedPdf) {
+        // Convert PDF to base64
+        const pdfArrayBuffer = await uploadedPdf.arrayBuffer();
+        const base64Data = btoa(
+          new Uint8Array(pdfArrayBuffer).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          )
+        );
+        
+        // Create request with PDF file - using proper field names
+        requestBody = {
+          contents: [{
+            parts: [
+              {
+                text: `Generate ${numberOfQuestions} flashcards from this PDF.
+Each flashcard should have a "question" and an "answer".
+Provide the output ONLY as a valid JSON array of objects, where each object has a "question" key and an "answer" key. Do not include any other text, explanation, or markdown formatting around the JSON.
+Example JSON format:
+[
+  {"question": "What is the capital of France?", "answer": "Paris"},
+  {"question": "Who wrote Hamlet?", "answer": "William Shakespeare"}
+]`
+              },
+              {
+                inline_data: {
+                  mime_type: "application/pdf",
+                  data: base64Data
+                }
+              }
+            ]
+          }]
+        };
+      } else {
+        // Text-based prompt for text input
+        const prompt = `Generate ${numberOfQuestions} flashcards from the following text.
 Each flashcard should have a "question" and an "answer".
 Provide the output ONLY as a valid JSON array of objects, where each object has a "question" key and an "answer" key. Do not include any other text, explanation, or markdown formatting around the JSON.
 Example JSON format:
@@ -118,24 +161,17 @@ Text to process:
 ${text}
 """`;
 
-    let generatedFlashcards = [];
+        requestBody = {
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }]
+        };
+      }
 
-    try {
       // Using your specified model
       const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
-
-      const requestBody = {
-        contents: [{
-          parts: [{
-            text: prompt
-          }]
-        }],
-        // You might need to add generationConfig if the model requires it or for better control
-        // generationConfig: {
-        //   temperature: 0.7,
-        //   // "responseMimeType": "application/json", // Worth trying if model supports
-        // }
-      };
 
       const response = await fetch(API_URL, {
         method: 'POST',
@@ -163,7 +199,7 @@ ${text}
       const data = await response.json();
       console.log("Full Gemini API Response:", data);
 
-
+      let generatedFlashcards = [];
       if (data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
         const rawJsonOutput = data.candidates[0].content.parts[0].text;
         console.log("Raw Gemini Output (text part):", rawJsonOutput);
@@ -215,12 +251,10 @@ ${text}
       <div className="flash-form">
         <h2>Create Your Flashcards</h2>
         <p className="form-description">
-          Start by typing. Text limit: {MAX_WORDS_FOR_TEXT_INPUT} words. 
+          Start by typing or uploading a PDF. Text limit: {MAX_WORDS_FOR_TEXT_INPUT} words. 
         </p>
-        <p className="form-description">NOTE: pdf parsing is still in devlopment. It will not work!!!</p>
-        {/* Deck title input removed as per last request */}
         <div className="form-controls">
-          <button onClick={handleClear} className="control-button clear-button" disabled={isLoading}>Clear Text</button>
+          <button onClick={handleClear} className="control-button clear-button" disabled={isLoading}>Clear</button>
           <button onClick={handleUploadClick} className="control-button upload-button" disabled={isLoading}>Upload PDF</button>
           <input
             type="file"
@@ -247,13 +281,14 @@ ${text}
           <textarea
             value={text}
             onChange={handleTextChange}
-            placeholder="Paste your notes, article, or study material here... (PDF text needs to be extracted here for generation)"
+            placeholder="Paste your notes, or upload a PDF"
             rows={15}
-            className="text-input-area"
-            disabled={isLoading}
+            className={`text-input-area ${uploadedPdf ? 'pdf-loaded' : ''}`}
+            disabled={isLoading || uploadedPdf}
+            readOnly={!!uploadedPdf}
           />
           <div className="word-count">
-            {currentWordCount}/{MAX_WORDS_FOR_TEXT_INPUT} words
+            {uploadedPdf ? 'PDF loaded' : `${currentWordCount}/${MAX_WORDS_FOR_TEXT_INPUT} words`}
           </div>
         </div>
         <button
