@@ -338,7 +338,7 @@
 /* Add to your FlashForm.css */
 
 .text-input-area.pdf-loaded {
-  background-color: #93cfcc;
+  background-color: text#93cfcc;
   color: #333;
   font-style: italic;
   cursor: not-allowed;

@@ -251,7 +251,7 @@ ${text}
       <div className="flash-form">
         <h2>Create Your Flashcards</h2>
         <p className="form-description">
-          Start by typing or uploading a PDF. Text limit: {MAX_WORDS_FOR_TEXT_INPUT} words. 
+          Start by typing or uploading a PDF
         </p>
         <div className="form-controls">
           <button onClick={handleClear} className="control-button clear-button" disabled={isLoading}>Clear</button>
